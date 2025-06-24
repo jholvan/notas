@@ -48,7 +48,7 @@ async function deleteNota(id) {
 async function uploadArquivo(file) {
   const form = new FormData();
   form.append('file', file);
-  form.append('upload_preset', 'notasvo'); // TROQUE AQUI
+  form.append('upload_preset', 'upload_preset'); // TROQUE AQUI
   const resp = await fetch('https://api.cloudinary.com/v1_1/djmrww1j7/auto/upload', { // TROQUE AQUI
     method: 'POST',
     body: form
