@@ -1,0 +1,90 @@
+<!DOCTYPE html><html lang="pt-br"><head><meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' 'unsafe-eval' data: blob: https://cdnjs.cloudflare.com https://cdn.jsdelivr.net https://code.jquery.com https://unpkg.com https://d3js.org https://threejs.org https://cdn.plot.ly https://stackpath.bootstrapcdn.com https://maps.googleapis.com https://cdn.tailwindcss.com https://ajax.googleapis.com https://kit.fontawesome.com https://cdn.datatables.net https://maxcdn.bootstrapcdn.com https://code.highcharts.com https://tako-static-assets-production.s3.amazonaws.com https://www.youtube.com https://fonts.googleapis.com https://fonts.gstatic.com https://pfst.cf2.poecdn.net https://puc.poecdn.net https://i.imgur.com https://wikimedia.org https://*.icons8.com https://*.giphy.com https://picsum.photos https://images.unsplash.com; frame-src 'self' https://www.youtube.com https://trytako.com; child-src 'self'; manifest-src 'self'; worker-src 'self'; upgrade-insecure-requests; block-all-mixed-content;">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Organizador de Notas Fiscais (IndexedDB)</title>
+  <link href="https://fonts.googleapis.com/css?family=Inter:400,600&amp;display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="estilo.css">
+</head>
+<body>
+  <div class="container">
+    <!-- Sidebar Navigation -->
+    <aside>
+      <nav>
+        <a href="#" data-category="Todas" class="todas-despesas"><span>📅</span><span>Todas as Despesas</span></a>
+        <a href="#" class="active" data-category="Despesas Médicas"><span>💉</span><span>Despesas Médicas</span></a>
+        <a href="#" data-category="Alimentação"><span>🍽️</span><span>Alimentação</span></a>
+        <a href="#" data-category="Moradia"><span>🏠</span><span>Moradia</span></a>
+        <a href="#" data-category="Contas de Consumo"><span>💡</span><span>Contas de Consumo</span></a>
+        <a href="#" data-category="Transporte"><span>🚗</span><span>Transporte</span></a>
+        <a href="#" data-category="Lazer e Entretenimento"><span>🎉</span><span>Lazer e Entretenimento</span></a>
+        <a href="#" data-category="Outras Despesas"><span>🗂️</span><span>Outras Despesas</span></a>
+      </nav>
+    </aside>
+    <!-- Main Content -->
+    <main>
+      <!-- Header -->
+      <header>
+        <div class="logo-placeholder" title="Logotipo"><span>🧾</span></div>
+        <h1>Organizador de Notas Fiscais</h1>
+      </header>
+      <!-- Top Actions -->
+      <div class="top-actions">
+        <div class="search-box">
+          <span class="icon">🔍</span>
+          <input type="text" id="searchInput" placeholder="Buscar nota fiscal...">
+        </div>
+        <button class="add-note-btn" id="addNoteBtn"><span>➕</span><span>Adicionar Nova Nota</span></button>
+      </div>
+      <!-- Seleção de mês e download do PDF -->
+      <div style="display:flex;align-items:center;flex-wrap:wrap;gap:8px;">
+        <select id="mesSelect" class="mes-select"></select>
+        <span id="valorTotalMes" class="total-mes"></span>
+        <button id="baixarResumoBtn" type="button" class="add-note-btn" style="margin-left:12px; padding:7px 14px; font-size:0.97rem;">
+          ⬇️ Baixar Resumo PDF
+        </button>
+      </div>
+      <!-- Notes List -->
+      <div class="notes-list" id="notesList"></div>
+    </main>
+  </div>
+  <!-- Modal Nova/Editar Nota -->
+  <div class="modal-overlay hidden" id="modalOverlay">
+    <div class="modal">
+      <button class="close-modal" id="closeModalBtn" title="Fechar">×</button>
+      <h2 id="modalTitulo">Nova Nota Fiscal</h2>
+      <form id="noteForm" autocomplete="off">
+        <input type="hidden" id="editId">
+        <label for="categoria">Categoria *</label>
+        <select id="categoria" required="">
+          <option value="" disabled="" selected="">Selecione...</option>
+          <option>Despesas Médicas</option>
+          <option>Alimentação</option>
+          <option>Moradia</option>
+          <option>Contas de Consumo</option>
+          <option>Transporte</option>
+          <option>Lazer e Entretenimento</option>
+          <option>Outras Despesas</option>
+        </select>
+        <label for="descricao">Descrição *</label>
+        <input type="text" id="descricao" maxlength="60" required="">
+        <label for="data">Data *</label>
+        <input type="date" id="data" required="">
+        <label for="valor">Valor (R$) *</label>
+        <input type="number" id="valor" step="0.01" min="0" required="">
+        <label for="arquivo">Arquivo</label>
+        <input type="file" id="arquivo" accept=".pdf,.jpg,.jpeg,.png">
+        <div id="arquivoAtual"></div>
+        <div class="modal-actions">
+          <button type="button" class="cancel-btn" id="cancelBtn">Cancelar</button>
+          <button type="submit" class="save-btn">Salvar</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <!-- jsPDF CDN -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+  <script src="app.js"></script>
+
+
+</body></html>

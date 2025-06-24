@@ -1,0 +1,70 @@
+:root {
+  --primary: #3b82f6;
+  --primary-light: #60a5fa;
+  --background: #f7fafc;
+  --surface: #fff;
+  --border: #e5e7eb;
+  --text: #22223b;
+  --muted: #6b7280;
+  --accent: #e0e7ff;
+}
+* { box-sizing: border-box; }
+body { margin: 0; font-family: 'Inter', Arial, sans-serif; background: var(--background); color: var(--text);}
+.container { display: flex; min-height: 100vh; }
+aside { width: 260px; background: var(--surface); border-right: 1px solid var(--border); padding: 32px 0 0 0; display: flex; flex-direction: column; min-height: 100vh; transition: width 0.2s;}
+@media (max-width: 900px) { 
+  aside { width: 70px; padding: 16px 0 0 0; } 
+  aside nav a span { display: none; } 
+}
+@media (max-width: 700px) {
+  .container { flex-direction: column; }
+  aside { flex-direction: row; width: 100%; height: 60px; border-right: none; border-bottom: 1px solid var(--border); padding: 0; min-height: unset;}
+  aside nav { flex-direction: row; width: 100%; }
+  aside nav a { padding: 0 10px; height: 60px; justify-content: center; }
+}
+main { flex: 1; padding: 32px 24px; min-width: 0; display: flex; flex-direction: column; gap: 32px;}
+header { display: flex; align-items: center; gap: 16px; margin-bottom: 32px; }
+.logo-placeholder { width: 48px; height: 48px; background: var(--accent); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; color: var(--primary); font-weight: 600; flex-shrink: 0;}
+h1 { font-size: 2rem; font-weight: 600; margin: 0; letter-spacing: -1px; }
+aside nav { display: flex; flex-direction: column; gap: 8px; margin-top: 0; }
+aside nav a { display: flex; align-items: center; gap: 10px; padding: 12px 24px; color: var(--muted); text-decoration: none; font-size: 1rem; border-left: 4px solid transparent; transition: background 0.2s, color 0.2s, border-color 0.2s;}
+aside nav a.active, aside nav a:hover { background: var(--accent); color: var(--primary); border-left: 4px solid var(--primary);}
+.top-actions { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; gap: 16px;}
+.search-box { flex: 1; max-width: 360px; position: relative; }
+.search-box input { width: 100%; padding: 10px 16px 10px 36px; border: 1px solid var(--border); border-radius: 6px; font-size: 1rem; background: #fff; color: var(--text); outline: none; transition: border 0.2s;}
+.search-box input:focus { border-color: var(--primary-light); }
+.search-box .icon { position: absolute; left: 10px; top: 10px; color: var(--muted); font-size: 1rem; pointer-events: none; }
+.add-note-btn { background: var(--primary); color: #fff; padding: 10px 18px; border: none; border-radius: 6px; font-size: 1rem; cursor: pointer; font-weight: 600; display: flex; align-items: center; gap: 8px; transition: background 0.2s;}
+.add-note-btn:hover { background: var(--primary-light); }
+.notes-list { display: grid; grid-template-columns: repeat(auto-fit, minmax(310px, 1fr)); gap: 24px; margin-top: 8px;}
+.note-card { background: var(--surface); border: 1px solid var(--border); border-radius: 10px; padding: 20px 18px 18px 18px; box-shadow: 0 1px 4px rgba(30, 34, 90, 0.03); display: flex; flex-direction: column; gap: 10px; transition: box-shadow 0.2s, border 0.2s;}
+.note-card:hover { box-shadow: 0 2px 12px rgba(30, 34, 90, 0.09); border-color: var(--primary-light);}
+.note-title { font-size: 1.1rem; font-weight: 600; margin-bottom: 2px; }
+.note-info { display: flex; flex-wrap: wrap; gap: 16px; font-size: 0.96rem; color: var(--muted); }
+.note-link { display: flex; align-items: center; gap: 6px; color: var(--primary); text-decoration: none; font-size: 0.97rem; margin: 4px 0 0 0; word-break: break-all;}
+.note-actions { display: flex; gap: 10px; margin-top: 6px; }
+.note-actions button { border: none; background: var(--accent); color: var(--primary); padding: 6px 14px; border-radius: 5px; cursor: pointer; font-size: 0.97rem; font-weight: 500; transition: background 0.18s, color 0.18s;}
+.note-actions button:hover { background: var(--primary); color: #fff; }
+.modal-overlay { position: fixed; top: 0; left: 0; right: 0; bottom: 0; background: rgba(34, 34, 51, 0.18); z-index: 1000; display: flex; align-items: center; justify-content: center; transition: opacity 0.18s; opacity: 1; pointer-events: auto;}
+.modal-overlay.hidden { opacity: 0; pointer-events: none; }
+.modal { background: var(--surface); border-radius: 12px; box-shadow: 0 4px 32px rgba(80, 90, 180, 0.15); padding: 32px 24px 20px 24px; min-width: 320px; max-width: 95vw; width: 400px; position: relative;}
+.modal h2 { margin: 0 0 16px 0; font-size: 1.3rem; font-weight: 600; color: var(--primary);}
+.modal form { display: flex; flex-direction: column; gap: 14px;}
+.modal label { font-size: 1rem; font-weight: 500; margin-bottom: 2px;}
+.modal input, .modal select { padding: 8px 12px; border: 1px solid var(--border); border-radius: 5px; font-size: 1rem; background: #fafdff; color: var(--text); outline: none; transition: border 0.2s;}
+.modal input:focus, .modal select:focus { border-color: var(--primary-light);}
+.modal-actions { display: flex; justify-content: flex-end; gap: 10px; margin-top: 12px;}
+.modal-actions button { padding: 8px 18px; border-radius: 6px; border: none; font-size: 1rem; font-weight: 500; cursor: pointer; transition: background 0.18s;}
+.save-btn { background: var(--primary); color: #fff; }
+.save-btn:hover { background: var(--primary-light);}
+.cancel-btn { background: var(--accent); color: var(--primary);}
+.cancel-btn:hover { background: var(--primary-light); color: #fff;}
+.close-modal { position: absolute; top: 14px; right: 16px; background: none; border: none; color: var(--muted); font-size: 1.3rem; cursor: pointer; transition: color 0.16s;}
+.close-modal:hover { color: var(--primary);}
+.total-mes { font-size: 1.11rem; color: var(--primary); background: var(--accent); padding: 8px 16px; border-radius: 7px; display: inline-block; margin-bottom: 10px;}
+.mes-select { font-size: 1rem; margin-bottom: 10px; padding: 5px 10px; border-radius: 5px; border: 1px solid var(--border);}
+@media (max-width: 480px) {
+  .modal { padding: 18px 6vw 14px 6vw; min-width: unset; width: 100vw;}
+  main { padding: 18px 6vw;}
+  .notes-list { grid-template-columns: 1fr;}
+}

@@ -1,0 +1,11 @@
+CREATE TABLE notas (
+  id SERIAL PRIMARY KEY,
+  categoria VARCHAR(60) NOT NULL,
+  descricao VARCHAR(100) NOT NULL,
+  data DATE NOT NULL,
+  valor NUMERIC(12,2) NOT NULL,
+  arquivo_url TEXT,
+  arquivo_nome TEXT,
+  arquivo_tipo TEXT,
+  criado_em TIMESTAMP DEFAULT NOW()
+);
