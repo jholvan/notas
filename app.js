@@ -49,6 +49,7 @@ async function uploadArquivo(file) {
   const form = new FormData();
   form.append('file', file);
   form.append('upload_preset', 'notasvo'); // TROQUE AQUI
+CLOUDINARY_URL=cloudinary://<your_api_key>:<your_api_secret>@djmrww1j7
   const resp = await fetch('https://api.cloudinary.com/djmrww1j7/auto/upload', { // TROQUE AQUI
     method: 'POST',
     body: form
